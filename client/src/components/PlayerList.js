@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { graphql } from 'react-apollo';
-import { getBooksQuery } from '../queries/queries';
+import { getAllPlayers } from '../queries/queries';
 import { Form, Button, Col, Row, ListGroup } from 'react-bootstrap';
 
 import ComapreDetails from './ComapreDetails';
@@ -28,18 +28,20 @@ class PlayerList extends Component {
 
       }
     }
-    displayBooks(){
+    displayPlayersOptions(){
         var data = this.props.data;
         if(data.loading){
-            return( <div>Loading books...</div> );
+            return( <option>... Loading Data ...</option> );
         } else {
-            return data.findAllplayer.map((book, i) => {
+          if (data && data.findAllplayer  && data.findAllplayer.length){
+            return data.findAllplayer.map((player, i) => {
                 return(
-                    <option value={book.id} key={i}>{ book.name }</option>
-                    // <Dropdown.Item key={i} >{ book.name }</Dropdown.Item>
-                    // <li key={ book.id } onClick={ (e) => this.setState({ selected: book.id }) }>{ book.name }</li>
+                    <option value={player.id} key={i}>{ player.name }</option>
                 );
             })
+          } else {
+            return( <option>... Loading Data...</option> );
+          }
         }
     }
     render(){
@@ -53,7 +55,7 @@ class PlayerList extends Component {
                       <Form.Label>Example multiple select</Form.Label>
                       <Form.Control as="select" name="player1" value={this.state.player1} onChange={this.onChangePlayer1}>
                       <option >Please Select Player1</option>
-                      {this.displayBooks()}
+                      {this.displayPlayersOptions()}
                       </Form.Control>
                     </Form.Group>
                   </Col>
@@ -62,7 +64,7 @@ class PlayerList extends Component {
                       <Form.Label>Example multiple select</Form.Label>
                       <Form.Control as="select" name="player2" value={this.state.player2} onChange={this.onChangePlayer2}>
                       <option >Please Select Player2</option>
-                      {this.displayBooks()}
+                      {this.displayPlayersOptions()}
                       </Form.Control>
                     </Form.Group>
                   </Col>
@@ -98,4 +100,4 @@ class PlayerList extends Component {
     }
 }
 
-export default graphql(getBooksQuery)(PlayerList);
+export default graphql(getAllPlayers)(PlayerList);

@@ -5,7 +5,7 @@ import { ListGroup } from 'react-bootstrap';
 
 
 class ComapreDetails extends Component {
-    displayBookDetails(){
+    displayCamparision(){
       console.log('this.props.data', this.props.data);
         const { player } = this.props.data;
         if(player){
@@ -55,7 +55,7 @@ class ComapreDetails extends Component {
     render(){
         return(
             <div id="book-details">
-                { this.displayBookDetails() }
+                { this.displayCamparision() }
             </div>
         );
     }
